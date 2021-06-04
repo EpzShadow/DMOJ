@@ -3,7 +3,6 @@ using namespace std;
 int main() {
 	cin.sync_with_stdio(0);
 	cin.tie(0);
-	bool bruh = false;
 	int m, n, sum = 0, numLightsOn = 0;
 	cin >> n >> m;
 	vector<int>lights(n + 1, 0);
@@ -29,8 +28,6 @@ int main() {
 			if (numLightsOn <= i) {
 				cout << i << endl;
 				break;
-				bruh = true;
-				
 			}
 		}
 	}
