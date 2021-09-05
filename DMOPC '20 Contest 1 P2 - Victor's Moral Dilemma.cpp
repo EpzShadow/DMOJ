@@ -4,63 +4,30 @@
 #define s second
 // #define int long long
 using namespace std; 
-const int MM = 5e5+ 5;
-vector<int>adj[MM];
-int vis[MM], maxNode = -1, maxDis = -1, dis[MM], dis2[MM];
-int leftNode, rightNode;
-void dfs(int curr, int dis){
-    vis[curr] = 1;
-    if(dis > maxDis){
-        maxNode = curr;
-        maxDis = dis;
+const int MM = 1e6+5;
+int arr[MM], d, n, m, start, endNode;
+void solve(){
+    cin >> m;
+    m+= start;
+    int f = arr[m] - arr[start];
+    int s = arr[endNode] - arr[m];
+    if(f >= s){
+        start = m;
+        cout << f << endl;
     }
-    for(int i : adj[curr]){
-        if(!vis[i]){
-            dfs(i, dis+1);
-        }
+    else{
+        endNode = m;
+        cout << s << endl;
     }
+    // cout << start << ' ' << endNode;
 }
 signed main(){
-    int n;
-    cin >> n;
-    for(int i = 0; i <= n; i ++)dis[i] = 1e9, dis2[i] = 1e9;
-    for(int i = 1, a, b; i < n; i ++){
-        cin >> a >> b;
-        adj[a].pb(b);
-        adj[b].pb(a);
+    cin >> n >> d;
+    start = 0;
+    endNode = n;
+    for(int i = 1; i <= n; i ++){
+       cin >> arr[i];
+       arr[i] += arr[i-1];
     }
-    dfs(1, 1);
-    memset(vis, 0, sizeof(vis));
-    leftNode = maxNode;
-    maxDis = -1;
-    dfs(maxNode, 0);
-    rightNode = maxNode;
-
-    // cout << leftNode << ' ' << rightNode;
-    queue<int> q;
-    q.push(leftNode);
-    dis[leftNode] = 1;
-    while(!q.empty()){
-        int v = q.front();
-        q.pop();
-        for(auto i : adj[v]){
-            if(dis[i] == 1e9){   
-                dis[i] = dis[v] + 1;
-                q.push(i);
-            }
-        }
-    }
-    q.push(rightNode);
-    dis2[rightNode] = 1;
-    while(!q.empty()){
-        int v = q.front();
-        q.pop();
-        for(auto i : adj[v]){
-            if(dis2[i] == 1e9){
-                dis2[i] = dis2[v] + 1;
-                q.push(i);
-            }
-        }
-    }
-    for(int i = 1; i <= n; i++)cout << max(dis[i], dis2[i]) << endl;
+    while(d--)solve();
 }
