@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+#define pb push_back
+#define f first
+#define s second
+#define int long long
+using namespace std; 
+int n, m, k, cnt;
+int arr[105][105];
+int vis[105][105];
+int dy[] = {0, -1, 0, 1};
+int dx[] = {-1, 0, 1, 0};
+void dfs(int x, int y){
+    vis[x][y] = 1;
+    arr[x][y] = 0;
+    for(int i = 0;i < 4; i++){
+        int newx = x + dx[i];
+        int newy = y + dy[i];
+        if(newx >=1 && newx <= m && newy >= 0 && newy <= n && arr[newx][newy] && !vis[newx][newy])
+            dfs(newx, newy);
+    }
+}
+signed main(){
+    cin >> n >> m >> k;
+    while(k--){
+        int a,b;
+        cin >> a >> b;
+        arr[a][b] = 1;
+    }
+    for(int i = 1;i <=n; i++)
+        for(int j = 1; j<=m; j++){
+            if(arr[i][j])dfs(i,j), cnt++;
+        }
+    cout << cnt;
+}
