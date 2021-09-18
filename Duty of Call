@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+#define pb push_back
+#define f first
+#define s second
+// #define unsigned long long
+using namespace std;
+const int MM = 5e5 + 5;
+vector<int> adj[MM];
+int n, r, teams[MM], inDegrees[MM], ans[3];
+queue<int>q ;
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cin >> n >> r;
+    teams[r] = 1;
+    for(int i =1 ;i <=n ; i++){
+        int m;cin >> m;
+        while(m--){
+            int x;
+            cin >> x;
+            adj[i].pb(x);
+            adj[x].pb(i);
+            inDegrees[x] += 1;
+        }
+    }
+    q.push(r);
+    while(!q.empty()){
+        int v = q.front();
+        q.pop();
+        for(auto i : adj[v]){
+            if(!teams[i]){
+                teams[v] == 1 ? teams[i] = 2 : teams[i] = 1;
+                q.push(i);
+            }
+        }
+    }
+    for(int i = 1; i <= n; i++){
+        if(!inDegrees[i]){
+            ans[teams[i]]++;
+        }
+    }    
+    cout << ans[1] << ' ' << ans[2];
+}
